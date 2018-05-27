@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<title>{% block title %}Django Web Programming{% endblock %}</title>
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "css/base.css" %}{% endblock %}" />
+<link rel="stylesheet" type="text/css" href="{% block extrastyle %}{% endblock %}" />
+
+</head>
+
+<body>
+    <div id="header">
+    {% if user.is_active %}
+    <h4 class="welcome">Welcome,
+                <strong>{% firstof user.get_short_name user.get_username %}</strong> /
+                <a href="{% url 'password_change' %}">Change Password</a> /
+                <a href="{% url 'logout' %}">Logout</a>
+    </h4>
+    {% else %}
+    <h4 class="welcome">Welcome, Anonymous /
+                <a href="{% url 'login' %}">Login</a> /
+                <a href="{% url 'register' %}">Register</a>
+    </h4>
+    {% endif %}
+</div>
+
+
+<div id="menu">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="{% url 'bookmark:index' %}">동아리 소개</a></li>
+    <li><a href="{% url 'blog:index' %}">토 론 방</a></li>
+    <li><a href="{% url 'blog:search' %}">회의록 검색</a></li>
+    <li><a href="{% url 'photo:index' %}">Album</a></li>
+       <li>Add&bigtriangledown;
+        <ul>
+            <li><a href="{% url 'blog:add' %}">회의 안건</a></li>
+            <li><a href="{% url 'photo:album_add' %}">엘범만들기</a></li>
+            <li><a href="{% url 'photo:photo_add' %}">사진 추가</a></li>
+        </ul>
+    </li>
+    
+    
+</div>
+
+{% block content %}{% endblock %}
+
+{% block footer %}{% endblock %}
+
+</body>
+</html>
